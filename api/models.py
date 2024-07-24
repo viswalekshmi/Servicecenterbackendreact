@@ -1,3 +1,4 @@
+# 
 from django.db import models
 from django.db.models import Sum
 
@@ -22,10 +23,20 @@ class Customer(models.Model):
 
     is_active = models.BooleanField(default=True)
 
+    status_options=(
+        ("created","created"),
+        ("wip","wip"),
+        ("completed","completed"),
+        ("pending","pending")
+    )
+
+    status=models.CharField(max_length=200,choices=status_options,default="created")
+
     @property
     def works(self):
 
         return self.work_set.all()
+    
     
     @property
     def work_total(self):
